@@ -21,8 +21,6 @@ npm run build      # type-check + production build into dist/
 npm run preview    # serve the built site
 ```
 
-**Deploy:** push to GitHub and import the repo into Vercel or Netlify. Build command `npm run build`, output folder `dist`. No other config needed.
-
 ## Controls
 
 | Input | Action |
@@ -126,14 +124,6 @@ export class DyslexiaRoom extends BaseRoom {
 - `audio.tone(freq, gain, wobble)`, `audio.murmur()`, `audio.chimeAt(pos)`, `audio.whisper(pan)`, `audio.clip('/audio/x.mp3')`, `audio.speak(text, { pitch, rate, volume, caption })` (speech shows captions unless `caption: false`)
 - `person({ height, shirt, hair, glasses, hat, apron, face })` in `world/builders.ts` builds a low-poly figure; `faceMaterial()` gives the shared face
 - `player.enabled` is true while the visitor is actively doing the task: use it to start sounds and timers. For HTML panel tasks, call `player.unlock()` when the panel opens so the mouse is free
-
-## Design rules (please keep them)
-
-- Palette: walls `#F4EFE6`, floor `#D9CBB3`, charcoal `#2B2B2E`. Room accents are Okabe-Ito colours, always paired with an icon and label.
-- Use `rbox()` and `mat()` from `world/materials.ts` for the soft low-poly look. No external models.
-- Font: Atkinson Hyperlegible. Large, readable text on signs.
-- Never flash more than 3 times a second. No jump scares. Any spoken audio needs captions (use `audio.speak` or call `onCaption`).
-- Every new control must be reachable by keyboard.
 
 ## Final message
 
