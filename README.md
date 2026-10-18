@@ -17,8 +17,6 @@ In the hallway, each door represents a different condition. Behind each door is 
 ```bash
 npm install
 npm run dev        # http://localhost:5173
-npm run build      # type-check + production build into dist/
-npm run preview    # serve the built site
 ```
 
 ## Controls
