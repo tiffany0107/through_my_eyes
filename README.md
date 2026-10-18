@@ -4,7 +4,13 @@
 
 A browser-based 3D gallery. Visitors walk a corridor of rooms. In each room they try an everyday task while a health condition is simulated, then they switch on support and see how small changes make the task easier.
 
-Built with **TypeScript + three.js + Vite**. 
+Built with **TypeScript + three.js + Vite**.
+
+## Project overview
+
+This project was created to help people understand accessibility through experience, not just explanation. Instead of reading about disability and inclusion, users step into a simulated world where common tasks become harder because the environment around them is designed without that support.
+
+In the hallway, each door represents a different condition. Behind each door is a simple everyday task—finding keys, reading a menu, processing audio, recognizing a person, or completing a form. The first attempt shows the struggle. With support enabled, users can see how small changes in design can make a major difference.
 
 ## Run it
 
@@ -48,7 +54,7 @@ npm run preview    # serve the built site
 
 ## Project structure
 
-```
+```text
 src/
   main.ts                 app, render loop, room flow (register new rooms here)
   config.ts               ALL text: room titles, quotes, stats, tasks, sources
@@ -129,8 +135,8 @@ export class DyslexiaRoom extends BaseRoom {
 - Never flash more than 3 times a second. No jump scares. Any spoken audio needs captions (use `audio.speak` or call `onCaption`).
 - Every new control must be reachable by keyboard.
 
-## Content checklist before the demo
+## Final message
 
-- [x] Quotes and "Why it matters" lines filled in for every room in `config.ts`.
-- [ ] Optional: add a `source` to any room in `config.ts` and it appears on the intro card.
-- [ ] Record clips into `public/audio/` (optional; speech synthesis is the fallback).
+Through My Eyes is more than a game or demo. It is an empathy-driven experience that helps people see the world from another perspective and understand why accessibility should be built into design from the start.
+
+Because when we design with inclusion in mind, we build spaces, products, and experiences that work better for everyone.
