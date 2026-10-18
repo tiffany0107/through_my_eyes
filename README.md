@@ -71,60 +71,6 @@ src/
 public/audio/             put recorded clips here
 ```
 
-## How to build a room
-
-1. Add an id to `RoomId` and an entry to `ROOMS` in `config.ts`, and register the class in `ROOM_FACTORIES` in `main.ts`.
-2. Create `src/rooms/<id>/index.ts` with a class that extends `BaseRoom`:
-
-```ts
-import * as THREE from 'three';
-import { BaseRoom } from '../Room';
-import { buildShell } from '../shell';
-import { rbox } from '../../world/materials';
-
-export class DyslexiaRoom extends BaseRoom {
-  constructor() { super('dyslexia'); }
-
-  protected build(): void {
-    buildShell(this.scene, this.colliders);              // floor, walls, lights
-    const counter = rbox(2, 1, 0.6, '#B88A5A');           // soft rounded box
-    counter.position.set(0, 0.5, -2);
-    this.scene.add(counter);
-    this.colliders.addMesh(counter);                      // can't walk through it
-    this.ctx.addClickable(counter, () => this.ctx.complete());
-    this.ctx.setTaskText('Order the coffee the waiter asks for');
-  }
-
-  setAccessible(on: boolean): void { super.setAccessible(on); /* turn support on/off */ }
-  resetTask(): void { /* reset for the second (supported) attempt */ }
-  update(dt: number, t: number): void { /* per-frame animation */ }
-  exit(): void { /* stop your sounds and timers */ super.exit(); }
-}
-```
-
-3. Run `npm run dev`, open the console, and run `__goto('dyslexia')`.
-
-### The Room interface
-
-| Method | When it's called | What to do |
-|---|---|---|
-| `build()` | Room is entered | Build the scene, register clickables, set the task text |
-| `update(dt, t)` | Every frame | Animate things |
-| `setAccessible(on)` | Before each attempt (`false`, then `true`), and by the Support button afterwards | Turn the support version on or off. **The condition usually stays on.** |
-| `resetTask()` | Before the supported attempt, and after each completion in "explore" mode | Reset counters and shuffle positions |
-| `exit()` | Leaving the room | Stop sounds and intervals, then call `super.exit()` (which disposes the scene and clears effects) |
-
-### Useful things on `this.ctx`
-
-- `addClickable(obj, fn)`: clickable within 4 m. Use an invisible bigger mesh as a hitbox for tiny objects (see the keys in tunnelVision).
-- `complete()`: the attempt is finished. The app handles timing and result cards.
-- `toast(msg)`, `setTaskText(text)`, `setRoomControls(htmlElement)` (left-side panel)
-- `showPanel(htmlElement)`: centred HTML panel for text-heavy tasks (dyslexia menu, job form). Returns a close function.
-- `effects.setColourBlind(type, severity)` and `effects.setTunnel(on, radius)`
-- `audio.tone(freq, gain, wobble)`, `audio.murmur()`, `audio.chimeAt(pos)`, `audio.whisper(pan)`, `audio.clip('/audio/x.mp3')`, `audio.speak(text, { pitch, rate, volume, caption })` (speech shows captions unless `caption: false`)
-- `person({ height, shirt, hair, glasses, hat, apron, face })` in `world/builders.ts` builds a low-poly figure; `faceMaterial()` gives the shared face
-- `player.enabled` is true while the visitor is actively doing the task: use it to start sounds and timers. For HTML panel tasks, call `player.unlock()` when the panel opens so the mouse is free
-
 ## Final message
 
 Through My Eyes is more than a game or demo. It is an empathy-driven experience that helps people see the world from another perspective and understand why accessibility should be built into design from the start.
